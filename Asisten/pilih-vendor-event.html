@@ -2,46 +2,616 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pilih Vendor untuk Event - Kapi EO</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="\Public\dashboard-assiten.css">
+  <style>
+    /* Professional Dashboard - Black & White Theme */
 
+    /* Reset dan Base Styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', 'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        overflow-x: hidden;
+        color: #1a1a1a;
+        line-height: 1.6;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+        width: 280px;
+        background: #ffffff;
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 2rem 0;
+        min-height: 100vh;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .sidebar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #ffffff;
+        z-index: -1;
+    }
+
+    .sidebar h4 {
+        color: #000000;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        padding: 0 1.5rem;
+        letter-spacing: -0.025em;
+    }
+
+    .sidebar hr {
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent);
+        margin: 1rem 1.5rem 2rem;
+    }
+
+    .sidebar a {
+        color: #404040;
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        border-left: 3px solid transparent;
+        font-size: 0.95rem;
+    }
+
+    .sidebar a:hover {
+        background: rgba(0, 0, 0, 0.08);
+        color: #000000;
+        border-left-color: #000000;
+        transform: translateX(4px);
+    }
+
+    .sidebar a:before {
+        content: '→';
+        font-size: 0.9rem;
+        margin-right: 0.75rem;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        font-weight: 600;
+    }
+
+    .sidebar a:hover:before {
+        opacity: 1;
+    }
+
+    .sidebar a.active {
+        background: rgba(0, 0, 0, 0.1);
+        color: #000000;
+        border-left-color: #000000;
+        font-weight: 600;
+    }
+
+    /* Content Area */
+    .content {
+        flex-grow: 1;
+        padding: 2.5rem 3rem;
+        background: #ffffff;
+        overflow-y: auto;
+    }
+
+    .content h2 {
+        color: #000000;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        text-align: center;
+        letter-spacing: -0.02em;
+    }
+
+    /* Form Styles */
+    .form-container {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-select, .form-control {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-select:focus, .form-control:focus {
+        border-color: #333333;
+        box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.15);
+    }
+
+    /* Vendor Card Styles */
+    .vendor-card {
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .vendor-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        border-color: #333333;
+    }
+
+    .vendor-card.selected {
+        border-color: #000000;
+        background: rgba(0, 0, 0, 0.02);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .vendor-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .vendor-name {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #000000;
+        margin-bottom: 0.25rem;
+    }
+
+    .vendor-type {
+        background: #f5f5f5;
+        color: #333333;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .vendor-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detail-label {
+        font-size: 0.85rem;
+        color: #666666;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+        font-size: 0.95rem;
+        color: #1a1a1a;
+        font-weight: 600;
+    }
+
+    .price {
+        font-size: 1.1rem;
+        color: #000000;
+        font-weight: 700;
+    }
+
+    /* Button Styles */
+    .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        letter-spacing: 0.025em;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #333333 0%, #000000 100%);
+        border: none;
+        color: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        background: linear-gradient(135deg, #404040 0%, #1a1a1a 100%);
+    }
+
+    .btn-secondary {
+        background: #f5f5f5;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        color: #333333;
+    }
+
+    .btn-secondary:hover {
+        background: #e6e6e6;
+        border-color: #333333;
+        transform: translateY(-1px);
+    }
+
+    /* Selected Vendors Summary */
+    .selected-summary {
+        background: rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .summary-title {
+        font-weight: 700;
+        color: #000000;
+        margin-bottom: 1rem;
+    }
+
+    .selected-vendor-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .selected-vendor-item:last-child {
+        border-bottom: none;
+    }
+
+    .total-budget {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #000000;
+        text-align: right;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid #000000;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        body {
+            flex-direction: column;
+        }
+        
+        .sidebar {
+            width: 100%;
+            min-height: auto;
+            padding: 1rem 0;
+        }
+        
+        .content {
+            padding: 1.5rem;
+        }
+        
+        .vendor-details {
+            grid-template-columns: 1fr;
+        }
+        
+        .selected-vendor-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+    }
+  </style>
 </head>
- <div class="sidebar">
+
+<body>
+  <div class="sidebar">
     <h4>Kapi EO - Asisten</h4>
     <hr>
     <a href="dashboard-asisten.html">Dashboard</a>
     <a href="tambah-klien.html">Tambah Klien Baru</a>
     <a href="buat-event-baru.html">Buat Event Baru</a>
-    <a href="pilih-vendor-event.html">Pilih Vendor untuk Event</a>
+    <a href="pilih-vendor-event.html" class="active">Pilih Vendor untuk Event</a>
     <a href="lihat-vendor-event.html">Lihat Vendor per Event</a>
     <a href="lihat-event-asisten.html">Event yang Ditangani</a>
     <a href="kelola-klien-event.html">Kelola Data Klien & Event</a>
     <a href="rincian-budgeting-event.html">Rincian Budgeting</a>
     <a href="/UI/login.html">Logout</a>
   </div>
-<body class="bg-light">
-  <div class="container mt-5">
+
+  <div class="content">
     <h2>Pilih Vendor untuk Event</h2>
-    <form>
-      <div class="mb-3">
-        <label for="event" class="form-label">Pilih Event</label>
-        <select class="form-select" id="event">
-          <option selected>Pilih Event</option>
-          <option value="event1">Pernikahan A & B</option>
-          <option value="event2">Seminar Startup</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="vendor" class="form-label">Pilih Vendor</label>
-        <select multiple class="form-select" id="vendor">
-          <option value="dekorasi">CV Dekor Indah (Dekorasi)</option>
-          <option value="catering">Rasa Nikmat (Catering)</option>
-          <option value="dokumentasi">Lensaku (Dokumentasi)</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Hubungkan Vendor</button>
-    </form>
+    
+    <div class="form-container">
+      <form id="vendorForm">
+        <div class="mb-4">
+          <label for="event" class="form-label">Pilih Event</label>
+          <select class="form-select" id="event" required>
+            <option value="">Pilih Event</option>
+            <option value="event1">Pernikahan A & B - 15 Desember 2024</option>
+            <option value="event2">Seminar Startup - 20 Januari 2025</option>
+            <option value="event3">Corporate Gathering - 5 Februari 2025</option>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label">Pilih Vendor</label>
+          <div id="vendorList">
+            <!-- Vendor Dekorasi -->
+            <div class="vendor-card" data-vendor="dekorasi1" data-price="15000000">
+              <div class="vendor-header">
+                <div>
+                  <div class="vendor-name">CV Dekor Indah</div>
+                  <span class="vendor-type">Dekorasi</span>
+                </div>
+                <div class="price">Rp 15.000.000</div>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Nama Owner</span>
+                  <span class="detail-value">Budi Santoso</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Alamat</span>
+                  <span class="detail-value">Jl. Mawar No. 123, Jakarta</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Harga Dealing</span>
+                  <span class="detail-value price">Rp 15.000.000</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Jenis Layanan</span>
+                  <span class="detail-value">Dekorasi Pernikahan & Event</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vendor Catering -->
+            <div class="vendor-card" data-vendor="catering1" data-price="25000000">
+              <div class="vendor-header">
+                <div>
+                  <div class="vendor-name">Rasa Nikmat Catering</div>
+                  <span class="vendor-type">Catering</span>
+                </div>
+                <div class="price">Rp 25.000.000</div>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Nama Owner</span>
+                  <span class="detail-value">Sari Widyaningsih</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Alamat</span>
+                  <span class="detail-value">Jl. Sudirman No. 45, Jakarta</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Harga Dealing</span>
+                  <span class="detail-value price">Rp 25.000.000</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Jenis Layanan</span>
+                  <span class="detail-value">Catering Premium & Prasmanan</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vendor Dokumentasi -->
+            <div class="vendor-card" data-vendor="dokumentasi1" data-price="8000000">
+              <div class="vendor-header">
+                <div>
+                  <div class="vendor-name">Lensaku Photography</div>
+                  <span class="vendor-type">Dokumentasi</span>
+                </div>
+                <div class="price">Rp 8.000.000</div>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Nama Owner</span>
+                  <span class="detail-value">Ahmad Rizky</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Alamat</span>
+                  <span class="detail-value">Jl. Kemang Raya No. 78, Jakarta</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Harga Dealing</span>
+                  <span class="detail-value price">Rp 8.000.000</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Jenis Layanan</span>
+                  <span class="detail-value">Foto & Video Wedding</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vendor Sound System -->
+            <div class="vendor-card" data-vendor="sound1" data-price="5000000">
+              <div class="vendor-header">
+                <div>
+                  <div class="vendor-name">Pro Audio Jakarta</div>
+                  <span class="vendor-type">Sound System</span>
+                </div>
+                <div class="price">Rp 5.000.000</div>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Nama Owner</span>
+                  <span class="detail-value">Dedi Kurniawan</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Alamat</span>
+                  <span class="detail-value">Jl. Gatot Subroto No. 89, Jakarta</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Harga Dealing</span>
+                  <span class="detail-value price">Rp 5.000.000</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Jenis Layanan</span>
+                  <span class="detail-value">Sound System & Lighting</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vendor Entertainment -->
+            <div class="vendor-card" data-vendor="entertainment1" data-price="12000000">
+              <div class="vendor-header">
+                <div>
+                  <div class="vendor-name">Harmony Band</div>
+                  <span class="vendor-type">Entertainment</span>
+                </div>
+                <div class="price">Rp 12.000.000</div>
+              </div>
+              <div class="vendor-details">
+                <div class="detail-item">
+                  <span class="detail-label">Nama Owner</span>
+                  <span class="detail-value">Maya Sari</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Alamat</span>
+                  <span class="detail-value">Jl. Thamrin No. 156, Jakarta</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Harga Dealing</span>
+                  <span class="detail-value price">Rp 12.000.000</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-label">Jenis Layanan</span>
+                  <span class="detail-value">Live Music & MC</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="selected-summary" id="selectedSummary" style="display: none;">
+          <div class="summary-title">Vendor Terpilih:</div>
+          <div id="selectedVendorsList"></div>
+          <div class="total-budget" id="totalBudget">Total Budget: Rp 0</div>
+        </div>
+
+        <div class="d-flex gap-3 mt-4">
+          <button type="button" class="btn btn-secondary" onclick="clearSelection()">Reset Pilihan</button>
+          <button type="submit" class="btn btn-primary">Hubungkan Vendor dengan Event</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <script>
+    let selectedVendors = [];
+    let totalBudget = 0;
+
+    // Handle vendor card selection
+    document.querySelectorAll('.vendor-card').forEach(card => {
+      card.addEventListener('click', function() {
+        const vendorId = this.dataset.vendor;
+        const vendorPrice = parseInt(this.dataset.price);
+        const vendorName = this.querySelector('.vendor-name').textContent;
+        const vendorType = this.querySelector('.vendor-type').textContent;
+
+        if (this.classList.contains('selected')) {
+          // Deselect vendor
+          this.classList.remove('selected');
+          selectedVendors = selectedVendors.filter(v => v.id !== vendorId);
+          totalBudget -= vendorPrice;
+        } else {
+          // Select vendor
+          this.classList.add('selected');
+          selectedVendors.push({
+            id: vendorId,
+            name: vendorName,
+            type: vendorType,
+            price: vendorPrice
+          });
+          totalBudget += vendorPrice;
+        }
+
+        updateSelectedSummary();
+      });
+    });
+
+    function updateSelectedSummary() {
+      const summaryDiv = document.getElementById('selectedSummary');
+      const vendorsList = document.getElementById('selectedVendorsList');
+      const totalBudgetDiv = document.getElementById('totalBudget');
+
+      if (selectedVendors.length === 0) {
+        summaryDiv.style.display = 'none';
+        return;
+      }
+
+      summaryDiv.style.display = 'block';
+      
+      vendorsList.innerHTML = selectedVendors.map(vendor => 
+        `<div class="selected-vendor-item">
+          <div>
+            <strong>${vendor.name}</strong> - ${vendor.type}
+          </div>
+          <div class="price">Rp ${vendor.price.toLocaleString('id-ID')}</div>
+        </div>`
+      ).join('');
+
+      totalBudgetDiv.textContent = `Total Budget: Rp ${totalBudget.toLocaleString('id-ID')}`;
+    }
+
+    function clearSelection() {
+      selectedVendors = [];
+      totalBudget = 0;
+      document.querySelectorAll('.vendor-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      updateSelectedSummary();
+    }
+
+    // Handle form submission
+    document.getElementById('vendorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const eventSelect = document.getElementById('event');
+      if (!eventSelect.value) {
+        alert('Silakan pilih event terlebih dahulu!');
+        return;
+      }
+
+      if (selectedVendors.length === 0) {
+        alert('Silakan pilih minimal satu vendor!');
+        return;
+      }
+
+      // Show success message
+      alert(`Berhasil menghubungkan ${selectedVendors.length} vendor dengan event "${eventSelect.options[eventSelect.selectedIndex].text}".\n\nTotal Budget: Rp ${totalBudget.toLocaleString('id-ID')}`);
+      
+      // Reset form
+      eventSelect.value = '';
+      clearSelection();
+    });
+  </script>
 </body>
 </html>

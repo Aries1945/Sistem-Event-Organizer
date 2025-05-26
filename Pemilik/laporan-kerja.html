@@ -4,14 +4,26 @@
   <meta charset="UTF-8">
   <title>Laporan Kerja Vendor - Kapi EO</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/Public/dashboard-pemilik.css">
-
+  <link rel="stylesheet" href="/Public/dashboard-pemilik.css">
+  <style>
+    .sidebar {
+      width: 200px;
+      position: fixed;
+      height: 100%;
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+    .container {
+      margin-left: 220px;
+    }
+  </style>
 </head>
+<body class="bg-light">
   <div class="sidebar">
     <h4>Kapi EO - Pemilik</h4>
     <hr>
     <a href="dashboard-pemilik.html">Dashboard</a>
-    <a href="tambah-asisten.html">Tambah Asisten</a> l
+    <a href="tambah-asisten.html">Tambah Asisten</a>
     <a href="tambah-jenis-vendor.html">Tambah Jenis Vendor</a>
     <a href="tambah-vendor.html">Tambah Vendor</a>
     <a href="laporan-kerja.html">Lihat Laporan Kerja Vendor</a>
@@ -19,16 +31,19 @@
     <a href="data-asisten-vendor.html">Semua Data Asisten & Vendor</a>
     <a href="\UI\login.html">Logout</a>
   </div>
-<body class="bg-light">
+
   <div class="container mt-5">
     <h2>Laporan Kerja Vendor</h2>
-    <table class="table table-striped">
-      <thead>
+    <table class="table table-striped table-bordered">
+      <thead class="table-dark">
         <tr>
           <th>Nama Vendor</th>
           <th>Jenis</th>
           <th>Jumlah Event</th>
-          <th>Penilaian</th>
+          <th>Owner</th>
+          <th>Range Harga</th>
+          <th>Kontak</th>
+          <th>Alamat</th>
         </tr>
       </thead>
       <tbody>
@@ -36,13 +51,21 @@
           <td>CV Dekor Indah</td>
           <td>Dekorasi</td>
           <td>12</td>
-          <td>4.5/5</td>
+
+          <td>Yuliana</td>
+          <td>Rp5.000.000 - Rp20.000.000</td>
+          <td>0812-3456-7890</td>
+          <td>Jl. Anggrek No. 10, Bandung</td>
         </tr>
         <tr>
           <td>Rasa Nikmat</td>
           <td>Catering</td>
           <td>9</td>
-          <td>4.7/5</td>
+
+          <td>Andi Sutanto</td>
+          <td>Rp10.000 - Rp75.000/porsi</td>
+          <td>0821-1111-2222</td>
+          <td>Jl. Merdeka No. 45, Bandung</td>
         </tr>
         <!-- Tambah data sesuai kebutuhan -->
       </tbody>
